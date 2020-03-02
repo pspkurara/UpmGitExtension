@@ -68,8 +68,8 @@ namespace Coffee.UpmGitExtension
             packageList.OnLoaded -= UpdateGitPackageVersions;
             packageList.OnLoaded += UpdateGitPackageVersions;
 #endif
-            AvailableVersions.OnChanged += UpdateGitPackageVersions;
-            UpdateGitPackageVersions();
+            // AvailableVersions.OnChanged += UpdateGitPackageVersions;
+            // UpdateGitPackageVersions();
             UpdateAvailableVersionsForGitPackages();
         }
 
@@ -79,13 +79,7 @@ namespace Coffee.UpmGitExtension
         public static void UpdateAvailableVersionsForGitPackages()
         {
             // Start update task.
-            foreach (var package in PackageExtensions.GetGitPackages())
-            {
-                var pInfo = package.GetInstalledVersion().GetPackageInfo();
-                var repoUrl = PackageUtils.GetRepoUrl(pInfo.packageId);
-                Debug.Log(kHeader, $"[UpdateAvailableVersionsForGitPackages] {pInfo.packageId} => {pInfo.name}, {repoUrl}");
-                AvailableVersionExtensions.UpdateAvailableVersions(pInfo.name, repoUrl);
-            }
+            AvailableVersionExtensions.UpdateAvailableVersions();
         }
 
         /// <summary>
@@ -93,6 +87,7 @@ namespace Coffee.UpmGitExtension
         /// </summary>
         public static void UpdateGitPackageVersions()
         {
+            return;
             bool changed = false;
             // Start update task.
             foreach (var package in PackageExtensions.GetGitPackages())

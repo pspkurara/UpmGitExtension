@@ -6,6 +6,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+
+#if !UNITY_2019_1_9_OR_NEWER
+using Semver;
+#endif
 
 namespace Coffee.UpmGitExtension
 {
@@ -36,6 +41,68 @@ namespace Coffee.UpmGitExtension
                 + repoUrl.GetHashCode()
                 + refName.GetHashCode();
         }
+    }
+
+
+    [Serializable]
+    public class PackageInfoSummary
+    {
+        static readonly Dictionary<string, ulong> s_VersionMap = new Dictionary<string, ulong>();
+        static readonly uint[] s_VersionMultiplier = new uint[] { 100000000, 1000000, 10000, 100, 1 };
+        static readonly Regex s_RegUnityVersion = new Regex("(\\d+).(\\d+).(\\d+)([^\\d]+)(\\d+)", RegexOptions.Compiled);
+        public string m_Name = "none";
+        public string m_Version = "1.0.0";
+        public string m_Unity = "2018.3";
+        public string m_UnityRelease = "0a0";
+        public string unityVersion => $"{m_Unity}.{m_UnityRelease}";
+        public bool isSupported => ParseVersion(unityVersion) < ParseVersion(Application.unityVersion);
+
+        public static ulong ParseVersion(string unityVersion)
+        {
+            ulong val;
+            if (s_VersionMap.TryGetValue(unityVersion, out val))
+                return val;
+
+            var c = s_RegUnityVersion.Match(unityVersion);
+            if (!c.Success)
+            {
+                s_VersionMap.Add(unityVersion, 0);
+                return 0;
+            }
+
+            val = c.Groups.Cast<Capture>()
+                .Skip(1)
+                .Select((x, i) =>
+                {
+                    ulong r;
+                    if (!ulong.TryParse(x.Value, out r))
+                        r = (uint)(x.Value.ToLower()[0] - 'a');
+                    return r * s_VersionMultiplier[i];
+                })
+                .Aggregate((a, b) => a + b);
+
+            s_VersionMap.Add(unityVersion, val);
+            return val;
+        }
+    }
+
+    [Serializable]
+    public class PackageCacheSummary
+    {
+        public string name;
+        public PackageInfoSummary[] versions;
+        public override int GetHashCode()
+        {
+            return JsonUtility.ToJson(this).GetHashCode();
+        }
+    }
+
+    [Serializable]
+    public class PackageCache
+    {
+        public string name;
+        public int hashCode;
+        public UnityEditor.PackageManager.PackageInfo[] versions;
     }
 
     [Serializable]
