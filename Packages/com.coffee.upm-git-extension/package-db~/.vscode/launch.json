@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "runtimeVersion": "6.10.0",
+      "runtimeArgs": ["--harmony"],
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": ["./../../manifest.json"]
+    },
+    {
+      "type": "node",
+      "runtimeVersion": "6.10.0",
+      "runtimeArgs": ["--harmony"],
+      "request": "launch",
+      "name": "Launch Program (Force Mode)",
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": ["./../../manifest.json", "--force"]
+    },
+    {
+      "type": "node",
+      "runtimeVersion": "6.10.0",
+      "runtimeArgs": ["--harmony"],
+      "request": "launch",
+      "name": "Launch Program (URL Mode)",
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": ["https://github.com/mob-sakai/UpmGitExtension", "--force"]
+    }
+  ]
+}

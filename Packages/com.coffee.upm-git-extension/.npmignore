@@ -20,3 +20,8 @@ Editor/Coffee.UpmGitExtension.Dev.meta
 !Editor/Coffee.UpmGitExtension.Core/*
 *.tgz
 .releaserc
+
+# package-db
+package-db~/*
+!package-db~/dist/
+package-db~/dist/**/*.js.map

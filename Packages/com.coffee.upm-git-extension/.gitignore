@@ -1,0 +1,22 @@
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Unity
+/Logs
+/Library
+/Temp
+
+# VS
+!.vscode/
+!package-db~/
+!package-db~/dist/
+package-db~/dist/**/*.js.map
+package-db~/Library
+
+node_modules/
+*.tgz
+*.tgz.meta
