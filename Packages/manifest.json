@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.coffee.open-sesame-compiler": "https://github.com/mob-sakai/OpenSesameCompilerForUnity.git#1.0.0-preview.25",
+    "com.coffee.open-sesame-compiler": "https://github.com/mob-sakai/OpenSesameCompilerForUnity.git#1.0.0-preview.26",
     "com.coffee.softmask-for-ugui": "https://github.com/mob-sakai/SoftMaskForUGUI.git#0.8.1",
     "com.unity.package-manager-ui": "2.0.3",
     "com.unity.purchasing": "2.0.3",
@@ -56,8 +56,8 @@
       "revision": "0.8.1"
     },
     "com.coffee.open-sesame-compiler": {
-      "hash": "bc846058aa8955d1c19bd4dae96b43e98f287562",
-      "revision": "1.0.0-preview.25"
+      "hash": "cee21f564c5c3bb347c66b63315b4011955aaece",
+      "revision": "1.0.0-preview.26"
     }
   }
 }
