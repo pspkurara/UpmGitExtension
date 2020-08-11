@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.coffee.open-sesame-compiler": "ssh://git@github.com/mob-sakai/OpenSesameCompilerForUnity.git#upm",
-    "com.coffee.softmask-for-ugui": "ssh://git@github.com/mob-sakai/SoftMaskForUGUI.git#0.8.1",
+    "com.coffee.open-sesame-compiler": "https://github.com/mob-sakai/OpenSesameCompilerForUnity.git#upm",
+    "com.coffee.softmask-for-ugui": "https://github.com/mob-sakai/SoftMaskForUGUI.git#0.8.1",
     "com.unity.package-manager-ui": "2.0.3",
     "com.unity.purchasing": "2.0.3",
     "com.coffee.upm-git-extension-test-bitbucket": "https://bitbucket.org/mob-sakai/GitPackageTest.git#0.5.0",
