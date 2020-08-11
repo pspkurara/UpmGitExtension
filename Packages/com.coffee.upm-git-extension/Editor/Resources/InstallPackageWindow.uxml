@@ -11,6 +11,11 @@
         <ui:Label name="findVersionsError" class="error"
                   tooltip="Versions not found. Make sure that the git repository url and access permissions are correct."/>
     </ui:VisualElement>
+    <ui:VisualElement name="subDirContainer" class="horizontal">
+        <ui:Label text="Sub Directory" class="fixed"/>
+        <ui:TextField name="subDirText" class="expandable"/>
+        <ui:Label text="" class="fixed"/>
+    </ui:VisualElement>
     <ui:VisualElement name="versionContainer" class="horizontal">
         <ui:Label text="Version" class="fixed"/>
         <ui:Button name="versionSelectButton" class="expandable unity-base-popup-field__input popupField"/>
