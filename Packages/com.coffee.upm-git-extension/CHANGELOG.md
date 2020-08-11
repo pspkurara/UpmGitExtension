@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/mob-sakai/UpmGitExtension/compare/v1.1.0...v1.1.1) (2020-08-11)
+
+
+### Bug Fixes
+
+* the same version is recommended after updating the package ([c766454](https://github.com/mob-sakai/UpmGitExtension/commit/c766454affcbdf0fecf06f0b929aefe5727dd871)), closes [#84](https://github.com/mob-sakai/UpmGitExtension/issues/84)
+
 # [1.1.0](https://github.com/mob-sakai/UpmGitExtension/compare/v1.0.1...v1.1.0) (2020-08-11)
 
 
