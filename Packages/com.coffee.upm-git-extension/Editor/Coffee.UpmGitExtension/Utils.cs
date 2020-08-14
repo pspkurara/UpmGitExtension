@@ -126,24 +126,9 @@ namespace Coffee.UpmGitExtension
             Debug.Log(kHeader, $"[PackageUtils.InstallPackage] packageName = {packageName}, repoUrl = {repoUrl}, refName = {refName}");
             UpdateJson("Packages/manifest.json", jsonDic =>
             {
-                var dependencies = jsonDic["dependencies"] as Dictionary<string, object>;
-                // Remove from dependencies.
-                dependencies?.Remove(packageName);
-
                 // Add to dependencies.
-                dependencies?.Add(packageName, repoUrl + "#" + refName);
-
-                // Unlock git revision.
-                var locks = jsonDic.TryGetValue("lock", out object lockValue) ? lockValue as Dictionary<string, object> : null;
-                if (locks != null && locks.ContainsKey(packageName))
-                    locks.Remove(packageName);
-            });
-
-            UpdateJson("Packages/packages-lock.json", jsonDic =>
-            {
                 var dependencies = jsonDic["dependencies"] as Dictionary<string, object>;
-                // Remove from dependencies.
-                dependencies?.Remove(packageName);
+                dependencies?.Add(packageName, repoUrl + "#" + refName);
             });
         }
 
@@ -156,14 +141,19 @@ namespace Coffee.UpmGitExtension
             Debug.Log(kHeader, $"[PackageUtils.UninstallPackage] packageName = {packageName}");
             UpdateJson("Packages/manifest.json", jsonDic =>
             {
+                // Remove from dependencies.
                 var dependencies = jsonDic["dependencies"] as Dictionary<string, object>;
                 dependencies?.Remove(packageName);
+
+                // Unlock git revision.
+                if (jsonDic.TryGetValue("lock", out var locks))
+                    (locks as Dictionary<string, object>)?.Remove(packageName);
             });
 
             UpdateJson("Packages/packages-lock.json", jsonDic =>
             {
+                // Unlock git revision.
                 var dependencies = jsonDic["dependencies"] as Dictionary<string, object>;
-                // Remove from dependencies.
                 dependencies?.Remove(packageName);
             });
         }
