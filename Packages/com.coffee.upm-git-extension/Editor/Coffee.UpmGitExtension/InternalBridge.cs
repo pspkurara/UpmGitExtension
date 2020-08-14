@@ -130,11 +130,10 @@ namespace Coffee.UpmGitExtension
     {
 #if UNITY_2020_1_OR_NEWER
 
-        internal static PageManager PageManagerInstance =>
 #if UNITY_2020_2_OR_NEWER
-            ServicesContainer.instance.Resolve<PageManager>();
+        internal static PageManager PageManagerInstance => ServicesContainer.instance.Resolve<PageManager>();
 #else
-            PageManager.instance;
+        internal static IPageManager PageManagerInstance => PageManager.instance;
 #endif
 
         internal static void RegisterLoadedAction(this PackageList self, Action action)
