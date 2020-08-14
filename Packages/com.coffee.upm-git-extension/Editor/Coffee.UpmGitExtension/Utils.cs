@@ -137,6 +137,13 @@ namespace Coffee.UpmGitExtension
                 if (locks != null && locks.ContainsKey(packageName))
                     locks.Remove(packageName);
             });
+
+            UpdateJson("Packages/packages-lock.json", jsonDic =>
+            {
+                var dependencies = jsonDic["dependencies"] as Dictionary<string, object>;
+                // Remove from dependencies.
+                dependencies?.Remove(packageName);
+            });
         }
 
         /// <summary>
@@ -149,6 +156,13 @@ namespace Coffee.UpmGitExtension
             UpdateJson("Packages/manifest.json", jsonDic =>
             {
                 var dependencies = jsonDic["dependencies"] as Dictionary<string, object>;
+                dependencies?.Remove(packageName);
+            });
+
+            UpdateJson("Packages/packages-lock.json", jsonDic =>
+            {
+                var dependencies = jsonDic["dependencies"] as Dictionary<string, object>;
+                // Remove from dependencies.
                 dependencies?.Remove(packageName);
             });
         }
