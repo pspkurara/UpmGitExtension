@@ -187,7 +187,15 @@ namespace Coffee.UpmGitExtension
 
                 // Save manifest.json.
                 File.WriteAllText(path, Json.Serialize(jsonDic, true));
-                EditorApplication.delayCall += () => AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+
+                EditorApplication.delayCall += () =>
+                {
+#if UNITY_2020_2_OR_NEWER
+                    UnityEditor.PackageManager.Client.Resolve();
+#else
+                    AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+#endif
+                };
             }
             catch (Exception e)
             {
