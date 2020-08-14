@@ -60,6 +60,7 @@ namespace Coffee.UpmGitExtension
     public static class ReflectionExtensions
     {
         const BindingFlags FLAGS = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+
         static object Inst(this object self)
         {
             return (self is Type) ? null : self;
@@ -175,13 +176,13 @@ namespace Coffee.UpmGitExtension
         static void UpdateJson(string path, Action<Dictionary<string, object>> action)
         {
             Debug.Log(kHeader, "[PackageUtils.UpdateJson] : " + path);
-            if (!File.Exists(path))return;
+            if (!File.Exists(path)) return;
 
             try
             {
                 var jsonDic = Json.Deserialize(File.ReadAllText(path)) as Dictionary<string, object>;
 
-                if(jsonDic != null && action != null)
+                if (jsonDic != null && action != null)
                     action(jsonDic);
 
                 // Save manifest.json.
@@ -206,8 +207,8 @@ namespace Coffee.UpmGitExtension
                 return "";
 
             return Directory.GetFiles(dir, pattern)
-                .FirstOrDefault(path => !path.EndsWith(".meta", StringComparison.Ordinal))
-                ?? "";
+                       .FirstOrDefault(path => !path.EndsWith(".meta", StringComparison.Ordinal))
+                   ?? "";
         }
 
         /// <summary>
@@ -234,6 +235,7 @@ namespace Coffee.UpmGitExtension
                 repoUrl = repoUrl.Replace("git@", "");
                 repoUrl = Regex.Replace(repoUrl, "\\.git$", "");
             }
+
             return repoUrl;
         }
 
@@ -261,6 +263,7 @@ namespace Coffee.UpmGitExtension
             {
                 element = element.parent;
             }
+
             return element;
         }
     }

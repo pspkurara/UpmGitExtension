@@ -41,8 +41,8 @@ namespace Coffee.UpmGitExtension.Dev
         static Type GetType(string fullname)
         {
             return Type.GetType(fullname + ", Coffee.UpmGitExtension")
-                ?? Type.GetType(fullname + ", Coffee.UpmGitExtension.OSC")
-                ?? Type.GetType(fullname + ", Coffee.UpmGitExtension.Core");
+                   ?? Type.GetType(fullname + ", Coffee.UpmGitExtension.OSC")
+                   ?? Type.GetType(fullname + ", Coffee.UpmGitExtension.Core");
         }
 
         [MenuItem("UGE/Update Display Versions")]
@@ -101,7 +101,7 @@ namespace Coffee.UpmGitExtension.Dev
             var symbols = GetSymbols();
             SetSymbols(symbols.Any(x => x == symbol)
                 ? symbols.Where(x => x != symbol).ToArray()
-                : symbols.Concat(new[] { symbol }).ToArray()
+                : symbols.Concat(new[] {symbol}).ToArray()
             );
         }
     }

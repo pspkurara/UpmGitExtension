@@ -26,6 +26,7 @@ using PackageCollection = UnityEditor.PackageManager.UI.PackageCollection;
 #endif
 #if UNITY_2020_1_OR_NEWER
 using UnityEditor.Scripting.ScriptCompilation;
+
 #endif
 
 namespace Coffee.UpmGitExtension
@@ -35,14 +36,20 @@ namespace Coffee.UpmGitExtension
         const string kHeader = "<b><color=#c7634c>[Bridge]</color></b> ";
 
         private static Bridge instance = new Bridge();
-        public static Bridge Instance { get { return instance; } }
+
+        public static Bridge Instance
+        {
+            get { return instance; }
+        }
 
         PackageList packageList;
         PackageDetails packageDetails;
 
         bool reloading;
 
-        private Bridge() { }
+        private Bridge()
+        {
+        }
 
         public void Setup(VisualElement root)
         {
@@ -105,7 +112,7 @@ namespace Coffee.UpmGitExtension
 
             var versionInfos = versions
                 .Select(v => v.ToPackageVersion(pInfoCurrent))
-                .Concat(new[] { pInfoCurrent })
+                .Concat(new[] {pInfoCurrent})
                 .Where(pInfo => pInfo == pInfoCurrent || pInfo.GetVersion() != pInfoCurrent.GetVersion())
                 .OrderBy(pInfo => pInfo.GetVersion())
                 .ToArray();
@@ -116,6 +123,7 @@ namespace Coffee.UpmGitExtension
                 package.UpdateVersions(versionInfos);
                 return true;
             }
+
             return false;
         }
 
@@ -152,7 +160,7 @@ namespace Coffee.UpmGitExtension
 
         internal static IEnumerable<UpmPackageVersion> GetGitPackageInfos()
         {
-            return GetGitPackages().Select(x=>x.GetInstalledVersion());
+            return GetGitPackages().Select(x => x.GetInstalledVersion());
         }
 
         internal static UpmPackageVersion GetInstalledVersion(this UpmPackage self)
