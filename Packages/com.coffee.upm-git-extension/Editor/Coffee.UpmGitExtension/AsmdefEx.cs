@@ -484,10 +484,10 @@ namespace __GENARATED_ASMDEF__.Coffee.UpmGitExtension
     }
 
 #if !ASMDEF_EX
-    [InitializeOnLoad]
     internal class RecompileRequest
     {
-        static RecompileRequest()
+        [InitializeOnLoadMethod]
+        static void OnInitializeOnLoadMethod()
         {
             var assemblyName = typeof(RecompileRequest).Assembly.GetName().Name;
             if (assemblyName == "Coffee.AsmdefEx")
@@ -501,9 +501,24 @@ namespace __GENARATED_ASMDEF__.Coffee.UpmGitExtension
 
             if (Core.LogEnabled)
                 UnityEngine.Debug.LogFormat("<b>Request to recompile: {0} ({1})</b>", assemblyName, asmdefPath);
-                
-            AssetDatabase.ImportAsset(asmdefPath, ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);
-            EditorApplication.delayCall += () => AssetDatabase.ImportAsset(asmdefPath);
+
+            var cs = Path.GetDirectoryName(asmdefPath) + "/AsmdefEx.cs";
+            AssetDatabase.ImportAsset(cs, ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);
+            // try
+            // {
+            //     Type.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface, UnityEditor")
+            //         .Get("Instance")
+            //         .Call("DirtyScript", "Assets/../" + scriptPath);
+            // }
+            // catch
+            // {
+            //     Type.GetType("UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface, UnityEditor")
+            //         .Get("Instance")
+            //         .Call("DirtyScript", "Assets/../" + scriptPath, assemblyName);
+            // }
+
+            // AssetDatabase.ImportAsset(asmdefPath, ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);
+            // EditorApplication.delayCall += () => AssetDatabase.ImportAsset(asmdefPath);
         }
     }
 #endif
