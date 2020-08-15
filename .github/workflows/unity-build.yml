@@ -89,6 +89,11 @@ jobs:
       # Checkout
       - uses: actions/checkout@v2
 
+      # Build tests
+      - name: Build tests
+        run: |
+          /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -buildTarget Linux64 -projectPath .
+
       # Build editor tests
       - name: Build editor tests
         run: |
