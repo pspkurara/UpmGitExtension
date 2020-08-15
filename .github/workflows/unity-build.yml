@@ -94,38 +94,39 @@ jobs:
         run: |
           /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -buildTarget Linux64 -projectPath .
 
-      # Build editor tests
-      - name: Build editor tests
-        run: |
-          /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -buildTarget Linux64 -projectPath . \
-            -runEditorTests -editorTestsResultFile ./editor_unittest.xml \
-            || [ -e ./editor_unittest.xml ] && exit 0 || exit 1
+          ls -la Library/ScriptAssemblies
 
-      # Validate editor test results
-      - name: Validate editor test results
-        run: |
-          SUMMARY=`grep '<test-run ' ./editor_unittest.xml \
-            | perl -pe 's/.*(result="[^"]*.*asserts="[^"]*).*/$1/' \
-            | tr -d '"'`
+      # # Build editor tests
+      # - name: Build editor tests
+      #   run: |
+      #     /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -buildTarget Linux64 -projectPath . \
+      #       -runEditorTests -editorTestsResultFile ./editor_unittest.xml \
+      #       || [ -e ./editor_unittest.xml ] && exit 0 || exit 1
 
-          echo "${SUMMARY}"
+      # # Validate editor test results
+      # - name: Validate editor test results
+      #   run: |
+      #     SUMMARY=`grep '<test-run ' ./editor_unittest.xml \
+      #       | perl -pe 's/.*(result="[^"]*.*asserts="[^"]*).*/$1/' \
+      #       | tr -d '"'`
 
-          FAILED=`cat editor_unittest.xml \
-            | perl -0pe 's/(<\/test-case>).*?(<test-case [^>]+>)/$1\n$2/sm' \
-            | perl -0pe 's/^.*?(<test-case )/$1/sm' \
-            | perl -pe 's/^ *(.*)\n/$1#__LF__#/g' \
-            | perl -pe 's/(<\/test-case>)/$1\n/g' \
-            | grep 'result="Failed"' \
-            | perl -pe 's/.*fullname="([^"]*).*<message><!\[CDATA\[ *(.*)\]\]><\/message>.*/[NG] $1#__LF__#$2/' \
-            | perl -pe 's/(#__LF__#|\n)/%0A/g'`
+      #     echo "${SUMMARY}"
 
-          echo "${FAILED}"
+      #     FAILED=`cat editor_unittest.xml \
+      #       | perl -0pe 's/(<\/test-case>).*?(<test-case [^>]+>)/$1\n$2/sm' \
+      #       | perl -0pe 's/^.*?(<test-case )/$1/sm' \
+      #       | perl -pe 's/^ *(.*)\n/$1#__LF__#/g' \
+      #       | perl -pe 's/(<\/test-case>)/$1\n/g' \
+      #       | grep 'result="Failed"' \
+      #       | perl -pe 's/.*fullname="([^"]*).*<message><!\[CDATA\[ *(.*)\]\]><\/message>.*/[NG] $1#__LF__#$2/' \
+      #       | perl -pe 's/(#__LF__#|\n)/%0A/g'`
 
-          if [ -n "`echo ${FAILED} | grep '\[NG\]'`" ]; then
-            echo "::error:: ${FAILED}"
-            exit 1
-          fi
+      #     echo "${FAILED}"
 
+      #     if [ -n "`echo ${FAILED} | grep '\[NG\]'`" ]; then
+      #       echo "::error:: ${FAILED}"
+      #       exit 1
+      #     fi
       # # Build runtime tests using RuntimeUnitTestToolkit
       # - name: Build runtime tests using RuntimeUnitTestToolkit
       #   run: |
