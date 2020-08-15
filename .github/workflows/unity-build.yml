@@ -94,7 +94,10 @@ jobs:
         run: |
           /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -buildTarget Linux64 -projectPath .
 
-          ls -la Library/ScriptAssemblies
+      # Size
+      - name: Size
+        run: |
+          ls -la Library/ScriptAssemblies/Coffee.UpmGitExtension.dll
 
       # # Build editor tests
       # - name: Build editor tests
